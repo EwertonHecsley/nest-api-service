@@ -5,18 +5,18 @@ import { IUser } from './dtos/User.dto';
 @Injectable()
 export class UserService {
     async create(user: IUser): Promise<IUser[]> {
-        return await knex('user').insert(user).returning('*');
+        return await knex('users').insert(user).returning('*');
     };
 
     async getAll(): Promise<IUser[]> {
-        return await knex('user');
+        return await knex('users');
     };
 
     async getUserById(id: number): Promise<IUser> {
-        return await knex('user').where({ id }).first();
+        return await knex('users').where({ id }).first();
     };
 
     async getUserByEmail(email: string): Promise<IUser> {
-        return await knex('user').where({ email }).first();
+        return await knex('users').where({ email }).first();
     };
 };
