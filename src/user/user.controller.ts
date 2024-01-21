@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
 import { UserService } from './user.service'
 import { Response } from 'express';
 import { IUser } from './dtos/User.dto';
@@ -16,7 +16,7 @@ export class UserController {
         const { name, email, password } = body;
 
         const verifyEmail = await this.userService.getUserByEmail(email);
-        if (verifyEmail) return res.status(HttpStatus.BAD_REQUEST).json({ mensagem: 'Email já cadastrado no sistema.' });
+        if (verifyEmail) throw new HttpException('Email já cadastrado no sistema.', HttpStatus.BAD_REQUEST);
 
         const hashPassword = await this.userHashPasswordService.hashPassword(password);
 
